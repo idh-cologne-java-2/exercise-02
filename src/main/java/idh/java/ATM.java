@@ -2,24 +2,35 @@ package idh.java;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Random;
 
 public class ATM {
 
 	int kontostandBenutzer = 5000;
+
+	HashMap<Integer,Float> konten = new HashMap<>();
+
 
 	public void run() {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		while(true) {
 			try {
-				System.out.print("Enter the amount to withdraw: ");
+				System.out.println("Gib bitte deine Kontonummer an: ");
+				System.out.print("Gib den Betrag an der abgehoben werden soll: ");
 
 				String str = br.readLine();
+				String kontonrString = br.readLine();
+
 				if (str.equalsIgnoreCase("exit")){
 					System.out.println("Vorgang wird beendet, Bis bald");
 					break;
 				}
 				int amount = Integer.parseInt(str);
+				int kontonr = Integer.parseInt(kontonrString);
+
+				init();
 				cashout(amount);
 
 			}
@@ -30,6 +41,21 @@ public class ATM {
 			}
 
 		}
+
+	}
+
+	public void init (){
+		Random random = new Random();
+
+
+		for (int i = 100; i <= 200; i++ ){
+
+			konten.put(i, random.nextFloat());
+		}
+
+
+
+
 
 	}
 
@@ -61,6 +87,7 @@ public class ATM {
 	 */
 	public static void main(String[] args) {
 		ATM atm = new ATM();
+		atm.init();
 		atm.run();
 
 
