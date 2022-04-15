@@ -31,8 +31,8 @@ public class ATM {
 	/**
 	 * User enter an amount of money he/she wants to withdraw.
 	 * If there is enough money in the bank, the user gets the money he/she wanted to withdraw.
-	 * If the user wants to withdraw more money than he/she has, the user will be informed too.
-	 * It is possible that there is not enough money in the bank, if that is the case the user will be informed.
+	 * If the user wants to withdraw more money than he/she has, the user will be informed.
+	 * It is possible that there is not enough money in the bank, if that is the case the user will be informed too.
 	 * @param amount
 	 */
 	public void cashout(int amount) {
