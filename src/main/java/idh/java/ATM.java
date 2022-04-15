@@ -3,25 +3,11 @@ package idh.java;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class ATM {
 
 	int geldATM = 100000;
-	int customerNumber;
-
-
-	public int setCustomerNumber(int customerNumber)
-	{
-		this.customerNumber=customerNumber;
-		return customerNumber;
-	}
-
-	public int getCustomerNumber()
-	{
-		return customerNumber;
-	}
 
 	HashMap<Integer,Float> konten = new HashMap<>();
 
@@ -32,18 +18,32 @@ public class ATM {
 		while(true) {
 			try {
 				System.out.print("Gib bitte zuerst deine Kontonummer an: ");
-				setCustomerNumber(Integer.parseInt(br.readLine()));
-
-				System.out.print("Gib den Betrag an der abgehoben werden soll: ");
-				String str = br.readLine();
-
-				if (str.equalsIgnoreCase("exit")){
+				String kontoNummerString = br.readLine();
+				if (kontoNummerString.equalsIgnoreCase("exit")){
 					System.out.println("Vorgang wird beendet, Bis bald");
 					break;
 				}
-				int amount = Integer.parseInt(str);
 
-				cashout(amount);
+				int kontoNr = Integer.parseInt(kontoNummerString);
+				if (!konten.containsKey(kontoNr)){
+					System.out.println("Angegebene KontoNr. existiert nicht (zulässige Nr. 100-200)");
+
+					continue;
+				}
+
+
+				System.out.print("Gib den Betrag an der abgehoben werden soll: ");
+				String betragString = br.readLine();
+
+				if (betragString.equalsIgnoreCase("exit")){
+					System.out.println("Vorgang wird beendet, Bis bald");
+					break;
+				}
+
+
+				int amount = Integer.parseInt(betragString);
+
+				cashout(amount, kontoNr);
 
 			}
 			catch (Exception e) {
@@ -54,31 +54,26 @@ public class ATM {
 
 		}
 
+
 	}
 
-	public void init (){
+	public void init () {
 		Random random = new Random();
 
-		for (int i = 100; i <= 200; i++ ){
+		for (int i = 100; i <= 200; i++) {
 
-			konten.put(i, random.nextFloat());
-
-			for(Map.Entry<Integer,Float> entry:konten.entrySet())
-			{
-				if(entry.getKey()==getCustomerNumber()){
-					//cashout();
-
-				}
+			konten.put(i, random.nextFloat(0,10000));
 		}
-
-
-
-		}
-
 	}
 
 
-	public void cashout(int amount) {
+
+	public void cashout(int amount, int kontoNr) {
+
+		if (amount > konten.get(kontoNr)){
+			System.out.println("Du hast nicht genug Geld auf deinem Konto!");
+			return;
+		}
 
 		if (amount <= 0) {
 			System.out.println("Negativer Betrag wird nicht akzeptiert");
@@ -96,6 +91,8 @@ public class ATM {
 		}
 		else {
 			geldATM -= amount;
+			konten.put(kontoNr, konten.get(kontoNr) -amount);
+
 			System.out.println("Hier ist dein Geld, viel Spass damit!");
 
 		}
