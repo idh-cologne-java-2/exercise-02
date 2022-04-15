@@ -2,14 +2,11 @@ package idh.java;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.Random;
 
 public class ATM {
 
 	int geldATM = 100000;
-
-	HashMap<Integer,Float> konten = new HashMap<>();
 
 
 	public void run() {
@@ -19,18 +16,23 @@ public class ATM {
 			try {
 				System.out.print("Gib bitte zuerst deine Kontonummer an: ");
 				String kontoNummerString = br.readLine();
+
+
 				if (kontoNummerString.equalsIgnoreCase("exit")){
 					System.out.println("Vorgang wird beendet, Bis bald");
 					break;
 				}
 
 				int kontoNr = Integer.parseInt(kontoNummerString);
-				if (!konten.containsKey(kontoNr)){
+
+				if (!Konto.kontoExistiert(kontoNr)){
 					System.out.println("Angegebene KontoNr. existiert nicht (zulässige Nr. 100-200)");
 
 					continue;
 				}
 
+				Konto k = Konto.getKonto(kontoNr);
+				System.out.println("Dein aktueller Kontostand: " + k.getKontoStand() + " €");
 
 				System.out.print("Gib den Betrag an der abgehoben werden soll: ");
 				String betragString = br.readLine();
@@ -43,7 +45,7 @@ public class ATM {
 
 				int amount = Integer.parseInt(betragString);
 
-				cashout(amount, kontoNr);
+				cashout(amount, k);
 
 			}
 			catch (Exception e) {
@@ -62,18 +64,17 @@ public class ATM {
 
 		for (int i = 100; i <= 200; i++) {
 
-			konten.put(i, random.nextFloat(0,10000));
+			float f = random.nextFloat(0,10000);
+			f *= 100;
+			f = Math.round(f) / 100f;
+
+			new Konto (f, i);
+
 		}
 	}
 
 
-
-	public void cashout(int amount, int kontoNr) {
-
-		if (amount > konten.get(kontoNr)){
-			System.out.println("Du hast nicht genug Geld auf deinem Konto!");
-			return;
-		}
+	public void cashout(int amount, Konto k) {
 
 		if (amount <= 0) {
 			System.out.println("Negativer Betrag wird nicht akzeptiert");
@@ -82,19 +83,17 @@ public class ATM {
 
 		if (amount % 5 != 0) {
 			System.out.println("Betrag kann nicht ausgegeben werden, da keine Münzen vorhanden sind");
-			System.out.println("Mögliche Beträge sind: " + amount/5 * 5 + " oder " + ((amount / 5) + 1) * 5 + " Euro") ;
+			System.out.println("Mögliche Beträge sind: " + amount / 5 * 5 + " oder " + ((amount / 5) + 1) * 5 + " Euro");
 			return;
 		}
 
-		if (amount > geldATM){
+		if (amount > geldATM) {
 			System.out.println("Dieser Automat hat zu wenig Geld!");
-		}
-		else {
-			geldATM -= amount;
-			konten.put(kontoNr, konten.get(kontoNr) -amount);
-
-			System.out.println("Hier ist dein Geld, viel Spass damit!");
-
+		} else {
+			boolean success = k.geldAbheben(amount);
+			if (success) {
+				geldATM -= amount;
+			}
 		}
 	}
 
