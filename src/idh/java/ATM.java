@@ -41,7 +41,6 @@ public class ATM {
 					} else {
 						System.out.println("Account number not found.");
 					}
-					i = 0;
 				}
 			} catch (Exception e) {
 				break;
