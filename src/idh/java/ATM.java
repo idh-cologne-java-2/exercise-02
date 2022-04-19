@@ -5,6 +5,10 @@ import java.io.InputStreamReader;
 
 public class ATM {
 	int accountBalance = 100;
+	
+	
+	
+	
 
 	/**
 	 * Main command loop of the ATM Asks the user to enter a number, and passes this
@@ -13,17 +17,43 @@ public class ATM {
 	 * loop breaks and the program exists
 	 */
 	public void run() {
+		
+		Account a1 = new Account(555, 150);
+		Account a2 = new Account(877, 20);
+		Account[] accounts = {a1,a2};
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		while (true) {
 			try {
+				System.out.println("Enter account number:");
+				Account current = getAccountByAccountNo(accounts, Integer.parseInt(br.readLine()));
+				if (current == null) {
+					System.out.println("Account not found!");
+					break;
+				}  
+				//System.out.println("Account found!");
+					else {
+				
 				System.out.print("Enter the amount to withdraw: ");
 				int amount = Integer.parseInt(br.readLine());
-				cashout(amount);
-			} catch (Exception e) {
+				cashout(amount); }}
+			 catch (Exception e) {
 				break;
 			}
 		}
 	}
+	
+    private Account getAccountByAccountNo(Account[] accounts, int accountNo) {
+		
+		for (Account account : accounts) {
+			
+			if(account.getAccountNo() == accountNo) {
+				return account;
+			}
+		}
+		return null;
+	}
+	
 
 	public void cashout(int amount) {
 		if (amount < accountBalance) {
@@ -34,11 +64,17 @@ public class ATM {
 		}
 
 	};
+	
+	
+	
+	
 
 	/**
 	 * Launches the ATM
 	 */
 	public static void main(String[] args) {
+		
+		
 		ATM atm = new ATM();
 		atm.run();
 	};
