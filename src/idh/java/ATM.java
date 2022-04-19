@@ -7,7 +7,7 @@ public class ATM {
 	//int accountBalance = 100; brauchen wir hier nicht, da wir verschiedene Accounts mit verschiedenen balances haben
 	private int ATMBalance = 2000; //Bargeld des ATMs
 	
-	//verschiedene Konten mit Id, balance und Name; siehe Class Accounts
+	//verschiedene Konten mit Id, balance und Name; siehe class Accounts
 	private Accounts a = new Accounts(123, 50, "Ali Barber"); 
 	private Accounts b = new Accounts(345, 500, "Cecil Dieder");
 	private Accounts c = new Accounts(567, 5000, "Emil Feger"); 
