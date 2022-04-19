@@ -1,5 +1,7 @@
 package idh.java;
 
+//Es werden zwei Integer mit Gettern und Settern erstellt, die in der Klasse ATM verwendet werden
+
 public class Account {
 	
 	private int accountNo;
@@ -16,9 +18,9 @@ public class Account {
 		return accountNo;
 	}
 
-	//public void setAccountNo(int accountNo) {
-	//	this.accountNo = accountNo;
-	//}
+	public void setAccountNo(int accountNo) {
+		this.accountNo = accountNo;
+	}
 
 	public int getMoney() {
 		return money;
