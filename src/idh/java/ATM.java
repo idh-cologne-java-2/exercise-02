@@ -1,4 +1,4 @@
-package b;
+package idh.java;
 
 import java.io.*;
 
@@ -6,8 +6,7 @@ public class ATM {
 	   int zaster = 69;
 	   int geldspeicher = 50;
 	   
-	   int kontonr[] = 123, 345, 567, 789;
-	   int 
+	   
 	   
 	/**
 	 * Main command loop of the ATM
