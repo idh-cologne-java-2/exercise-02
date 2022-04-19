@@ -4,43 +4,106 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class ATM {
-	int accountBalance = 100;
+	
+	public int atmcash = 50;
+	
+	public static void main(String[] args) {
 
-	/**
-	 * Main command loop of the ATM Asks the user to enter a number, and passes this
-	 * number to the function cashout(...) which actually does the calculation and
-	 * produces money. If the user enters anything else than an integer number, the
-	 * loop breaks and the program exists
-	 */
+		ATM atm = new ATM();
+		atm.run();
+
+	};
+
+	
 	public void run() {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+		Accounts a123 = new Accounts(123, 200);
+		Accounts a234 = new Accounts(234, 500);
+		Accounts a345 = new Accounts(345, 50);
+		Accounts[] accounts = {a123, a234, a345};
+		
+		BufferedReader bfr = new BufferedReader(new InputStreamReader(System.in));
 		while (true) {
 			try {
+				//get Kontonummer 
+				System.out.print("Enter your account number: ");
+				int accountnumber= Integer.parseInt(bfr.readLine());
+				Accounts current = getAccountnumber(accounts, accountnumber);
+				if(current == null) {
+					System.out.println("Sorry, we don´t know this account number!");
+					break;
+				}
+				// get withdraw
 				System.out.print("Enter the amount to withdraw: ");
-				int amount = Integer.parseInt(br.readLine());
-				cashout(amount);
+				int amount= Integer.parseInt(bfr.readLine());
+				if(amount > atmcash) {
+					System.out.println("Sorry we don´t have enough cash!");
+					run();
+				}
+				cashout(accounts, amount, accountnumber);
+				
 			} catch (Exception e) {
+				System.out.println("Please enter numbers!");
 				break;
 			}
 		}
-	}
-
-	public void cashout(int amount) {
-		if (amount < accountBalance) {
-			accountBalance = accountBalance - amount;
-			System.out.println("Ok, here is your money, enjoy!");
-		} else {
-			System.out.println("Sorry, not enough money in the bank.");
+		
+	};
+	
+	public static Accounts getAccountnumber(Accounts[] accounts, int accountnumber) {
+		for(Accounts account : accounts) {
+			if(account.getKontoNummer() == accountnumber) {
+				return account;
+			}
 		}
 
-	};
-
-	/**
-	 * Launches the ATM
-	 */
-	public static void main(String[] args) {
-		ATM atm = new ATM();
-		atm.run();
-	};
-
-}
+		return null;
+		
+	}
+	
+    
+	//hier wird dann je nach Kontonummer und Kontostand das Geld ausgegeben
+    //außerdem wird  der kontostand minimiert und der Cashspeicher des ATMS
+    
+    
+	public void cashout(Accounts[] accounts, int amount, int accountnumber) {	
+		
+		switch(accountnumber) {
+			case (123): {
+				if(accounts[0].getAccountBalance() > amount) {
+					accounts[0].setAccountBalance((accounts[0].getAccountBalance() - amount));
+					atmcash = atmcash - amount;
+					System.out.println("Ok, here is your money, enjoy!");
+		
+				}
+				else {
+					System.out.println("Sorry, you don't have enough money in the bank.");
+				}
+				break;
+			}
+			case (234): {
+				if(accounts[1].getAccountBalance() >= amount) {
+				   accounts[1].setAccountBalance((accounts[1].getAccountBalance() - amount));
+				   atmcash = atmcash - amount;
+				   System.out.println("Ok, here is your money, enjoy!");
+				}
+				else {
+					System.out.println("Sorry, you don't have enough money in the bank.");
+				}	
+				break;
+			}
+			case (345): {
+				if(accounts[2].getAccountBalance() >= amount) {
+				   accounts[2].setAccountBalance((accounts[2].getAccountBalance() - amount));
+				   atmcash = atmcash - amount;
+				   System.out.println("Ok, here is your money, enjoy!");
+				}
+				else {
+					System.out.println("Sorry, you don't have enough money in the bank.");
+				}	
+				break;
+			}
+			
+		}
+	}; 
+};
