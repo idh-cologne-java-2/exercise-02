@@ -18,8 +18,8 @@ public class ATM {
 	 */
 	public void run() {
 		
-		Account a1 = new Account(555, 150);
-		Account a2 = new Account(877, 20);
+		Account a1 = new Account(434, 100);
+		Account a2 = new Account(789, 15);
 		Account[] accounts = {a1,a2};
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
