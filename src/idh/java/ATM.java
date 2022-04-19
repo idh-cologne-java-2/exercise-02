@@ -3,11 +3,10 @@ package idh.java;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import idh.java.Customer;
 
 public class ATM {
 	
-	
+	int cash = 2000;
 
 	
 	
@@ -36,7 +35,8 @@ public class ATM {
 		
 		Customer c1 = new Customer("Nathan", 001, 400);
 		Customer c2 = new Customer("Simon", 002, 900);
-		Customer[] customers = {c1,c2};
+		Customer c3 = new Customer("Flo", 003, 1000000);
+		Customer[] customers = {c1,c2,c3};
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		while(true) {
@@ -44,7 +44,7 @@ public class ATM {
 				System.out.println("Enter your Acc. Number: ");
 				Customer current = getCustomerByAccountNumber(customers, Integer.parseInt(br.readLine()));
 				if (current == null) {
-					System.out.println("Unfortunately this Acc. Number doesn't exist. Bye!");
+					System.out.println("Unfortunately this Account Number doesn't exist. Bye!");
 					break;
 				}
 				int balance = current.getBalance();
@@ -53,15 +53,17 @@ public class ATM {
 				System.out.print("Enter the amount of Talers you'd like to withdraw: ");
 				int amount = Integer.parseInt(br.readLine());
 				
-				balance = balance - amount;	
+				balance = balance - amount;				
 				
-				
-				if (balance >= 0) {
-					System.out.println("Your new balance is " + balance + " Talers."); 
+				if(balance > cash && balance > 0) {
+					System.out.println("Too much Talers you ask for, there is only " + cash + " Talers left in this ATM.");
+				} else if (balance >= 0) {
+					cash = cash - amount;
+					System.out.println("Your new balance is " + balance + " Talers. Cash Talers left in this ATM: " + cash); 
 				} else {
 					System.out.println("You cant withdraw that amount cuz u broke, bitch.");
 				}
-				break;
+				
 				
 			} catch (Exception e) {
 				System.out.println("Erroré :/");
@@ -83,7 +85,7 @@ public class ATM {
 	
 //	public void cashout(int amount) {
 //		 
-//		balance -= amount;	
+//		balance = balance - amount;	
 //		String dialogue = balance >= 0 ? "Your current balance is: " + balance : " Can't withdraw Talers. Your bank account is allé :(";
 //		System.out.println(dialogue);
 //		
