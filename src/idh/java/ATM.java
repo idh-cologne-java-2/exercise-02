@@ -1,16 +1,10 @@
 package idh.java;
 
 import java.io.BufferedReader;
-import idh.java.BankAccount;
 import java.io.InputStreamReader;
-import java.util.Scanner;
 
 public class ATM {
-	private int storage;
-	//int cashintash = 200;
-	public void Cashmashine() {
-	storage = 5000;
-	}
+	private int storage = 3000;
 
 	/**
 	 * Main command loop of the ATM Asks the user to enter a number, and passes this
@@ -19,36 +13,8 @@ public class ATM {
 	 * loop breaks and the program exists
 	 */
 	
-	/*public static void BankingSystem() {
-		BankAccount Dirk = new BankAccount("Dirk", 123, 2000);
-		BankAccount Annette = new BankAccount("Annette", 321, 4000);
-		//BankAccount[] bankAccounts = {Dirk, Annette};
-		
-		System.out.println("Pin: ");
-		 Scanner check = new Scanner(System.in);
-		  int pin = check.nextInt();  */
-	}
 	
-	/*public void Pin_Check(int pin) {
-		System.out.println("Pin: "); 
-		Scanner check = new Scanner(System.in);
-		 pin = check.nextInt();
-		 int enteredpin = check.nextInt();
-		 
-		if (enteredpin == pin) {
-			
-			System.out.println("Hi, your Pin is correct! Now you can get your Mula!");
-			ATM atm = new ATM();
-			atm.run();
-			
-		}
-		
-		if (enteredpin != pin)
-			System.out.println("Pin is incorrect, you dumbass!");
-	} */
-	
-	
-	
+	// Ich habe leider keine Lösung dafür gefunden den Kontostand der Kunden auf die nächste Abbuchung zu übertragen :(
 	public void run() {
 		BankAccount Dirk = new BankAccount("Dirk", 123, 2000);
 		BankAccount Annette = new BankAccount("Annette", 321, 4000);
@@ -64,36 +30,40 @@ public class ATM {
 					 System.out.println("Pin was incorrect");
 					 break;
 				 }
-				 int balance = 
+				 int cashintash = current.getCashintash();
+				 System.out.println("Hi " + current.getName() + ". currently you have: " + cashintash + " €");
 
-				 }
-				
-				
 				
 				System.out.print("Enter the amount to withdraw: ");
 				int amount = Integer.parseInt(br.readLine());
-				cashout(amount);
+				
+				cashintash = cashintash - amount;
+				
+				if(cashintash > storage) {
+					System.out.println("you have to withdraw less");
+				} else if (cashintash >= 0) {
+					storage = storage - amount;
+					System.out.println("Your new balance: " + cashintash + " €. There are " + storage + " € left in this ATM.");
+				} else {
+					System.out.println("you´re too broke or there is not enough money left :(");
+				}
+				
 			} catch (Exception e) {
 				break;
 			}
 		}
 	} 
 	
-	/*public void Customer (String[] args) {
-		Customer Dirk = new Customer("Dirk", 123, 2000);
-}
-*/
-	public void cashout(int amount ) {
-		
-		if (amount <= cashintash) {
-			cashintash -= amount;
-			System.out.println("Youre current balance is: " + cashintash);
-		}
-		else if (amount > cashintash){
-			System.out.println("You´re to Broke!" + "\n" + "try again!");
-			}
-	}; 
 	
+	private BankAccount getBankAccountByPin(BankAccount[] bankAccounts, int pin) {
+		
+		for(BankAccount BankAccount : bankAccounts) {
+			if(BankAccount.getPin() == pin) {
+				return BankAccount;
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Launches the ATM
