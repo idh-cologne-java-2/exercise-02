@@ -80,3 +80,8 @@ public class ATM {
 	};
 
 }
+
+/**
+ * Bei der Eingabe der Accountnummer geht der Automat nicht automatisch weiter
+ * 
+ */
