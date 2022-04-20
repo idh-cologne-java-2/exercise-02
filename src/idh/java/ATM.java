@@ -4,7 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class ATM {
-	int accountBalance = 100;
+	int accountBalance;
+	int cashReserveATM = 1000;
 
 	/**
 	 * Main command loop of the ATM Asks the user to enter a number, and passes this
@@ -16,6 +17,9 @@ public class ATM {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		while (true) {
 			try {
+				System.out.print("Enter your account number: ");
+				int accountNumber = Integer.parseInt(br.readLine());
+				user(accountNumber);
 				System.out.print("Enter the amount to withdraw: ");
 				int amount = Integer.parseInt(br.readLine());
 				cashout(amount);
@@ -26,11 +30,15 @@ public class ATM {
 	}
 
 	public void cashout(int amount) {
-		if (amount < accountBalance) {
+		if (amount <= accountBalance && amount <= cashReserveATM) {
 			accountBalance = accountBalance - amount;
+			cashReserveATM = cashReserveATM - amount;
 			System.out.println("Ok, here is your money, enjoy!");
+		} else if (amount <= accountBalance && amount > cashReserveATM){
+			cashReserveATM = 1000;
+			System.out.println("Sorry, the ATM doesn't have that much cash anymore.");
 		} else {
-			System.out.println("Sorry, not enough money in the bank.");
+			System.out.println("Sorry, you don't have enough money in the bank.");
 		}
 
 	};
@@ -42,5 +50,16 @@ public class ATM {
 		ATM atm = new ATM();
 		atm.run();
 	};
+	
+	public void user(int accountNumber) throws Exception {
+		switch(accountNumber) {
+		case 123: accountBalance = 100;
+		break;
+		case 456: accountBalance = 1000;
+		break;
+		default: System.out.println("Sorry, we don't have that account number registered.");
+		throw new Exception("Invalid account number");
+		}
+	}
 
 }
