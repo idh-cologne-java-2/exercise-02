@@ -5,7 +5,7 @@ import java.io.*;
 public class ATM {
 	   int zaster = 69;
 	   int geldspeicher = 50;
-	   
+	   int kontonummer = 101;
 	   
 	   
 	/**
@@ -19,16 +19,38 @@ public class ATM {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		while(true) {
 			try {
-				System.out.print("Geben sie hier den gewünschten Betrag ein: ");
-				int amount = Integer.parseInt(br.readLine());
-				cashout(amount);
-			} catch (Exception e) {
+				System.out.print("Kontonummer:");
+				int eintrag = Integer.parseInt(br.readLine());
+				konto(eintrag);
+				}
+				
+			 catch (Exception e) {
 				break;
 			}
 		}
 	}
 
-	
+	public void konto (int eintrag) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		if(true) {
+			try {
+				if (kontonummer==eintrag) {
+		System.out.print("Geben sie hier den gewünschten Betrag ein: ");
+		int amount = Integer.parseInt(br.readLine());
+		cashout(amount);
+		}
+				else {
+					System.out.println("Konto existiert nicht");
+				
+				
+				}
+			
+			}
+	 catch (Exception x) {
+			
+		}
+	}
+	}
 	public void cashout(int amount) {
 		
 		if ( geldspeicher >= amount ) {
@@ -54,7 +76,7 @@ public class ATM {
 		}*/
 	}
 	
-		else {
+		else if (amount>geldspeicher){
 			System.out.println("Dieser Geldautomat verfügt nicht über die nötigen Kapazitäten");
 		}
 	}
