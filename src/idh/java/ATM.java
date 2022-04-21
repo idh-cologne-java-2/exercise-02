@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 public class ATM {
 	
 	int cash = 2000;
-
-	
+	int balance;
+	int amount;
 	
 	/**
 	 * Main command loop of the ATM
@@ -35,7 +35,7 @@ public class ATM {
 		
 		Customer c1 = new Customer("Nathan", 001, 400);
 		Customer c2 = new Customer("Simon", 002, 900);
-		Customer c3 = new Customer("Flo", 003, 1000000);
+		Customer c3 = new Customer("Flo", 003, 10000);
 		Customer[] customers = {c1,c2,c3};
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -47,26 +47,29 @@ public class ATM {
 					System.out.println("Unfortunately this Account Number doesn't exist. Bye!");
 					break;
 				}
-				int balance = current.getBalance();
-				System.out.println("Hi " + current.getCustomer() + "! Currently you hodl " + balance + " Talers!");
+				
+				System.out.println("Hi " + current.getCustomer() + "! Currently you hodl " + current.getBalance() + " Talers!");
 			
 				System.out.print("Enter the amount of Talers you'd like to withdraw: ");
-				int amount = Integer.parseInt(br.readLine());
+				amount = Integer.parseInt(br.readLine());
 				
+				balance = current.getBalance();
 				balance = balance - amount;				
 				
-				if(balance > cash && balance > 0) {
+				if(amount > cash) {
 					System.out.println("Too much Talers you ask for, there is only " + cash + " Talers left in this ATM.");
 				} else if (balance >= 0) {
 					cash = cash - amount;
+					current.setBalance(balance);
 					System.out.println("Your new balance is " + balance + " Talers. Cash Talers left in this ATM: " + cash); 
 				} else {
 					System.out.println("You cant withdraw that amount cuz u broke, bitch.");
+					
 				}
 				
 				
 			} catch (Exception e) {
-				System.out.println("Erroré :/");
+				System.out.println("Error 420 :/");
 				break;
 			}
 		}
