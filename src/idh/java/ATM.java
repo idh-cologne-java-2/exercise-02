@@ -30,8 +30,12 @@ public class ATM {
 			if (accnr == a.getAccountnumber()){
 				System.out.print("Enter the amount to withdraw: ");
 				int amount = Integer.parseInt(br.readLine());
-				cashout(amount);
-				break;
+				if (amount <= a.getMoneyInAcc()) {
+					cashout(amount);
+				}	
+					else  {
+					System.out.print("Sorry, not enough Money in your Bankacc ");
+					}
 			}
 			else if (accnr == b.getAccountnumber()){
 				System.out.println("Enter the amount to withdraw: ");
@@ -44,11 +48,15 @@ public class ATM {
 				}	
 				}
 			else if (accnr == c.getAccountnumber()){
-				System.out.print("Enter the amount to withdraw: ");
+				System.out.println("Enter the amount to withdraw: ");
 				int amount = Integer.parseInt(br.readLine());
+				if (amount <= c.getMoneyInAcc()) {
 				cashout(amount);
-				break;
-			}
+			}	
+				else  {
+				System.out.print("Sorry, not enough Money in your Bankacc ");
+				}	
+				}
 			else {
 				System.out.println("Something went wrong, try again: ");
 				System.out.println("First, enter your accountnumber please: ");
